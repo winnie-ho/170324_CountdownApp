@@ -3,9 +3,11 @@ import {
   AppRegistry,
   View,
   StyleSheet,
+  TouchableHighlight,
   TouchableOpacity,
   Text,
   ListView,
+  ScrollView,
   AsyncStorage,
 
 } from "react-native";
@@ -27,7 +29,7 @@ class Home extends React.Component {
       event: "",
       dataSource: ds.cloneWithRows([]),
       allKeys: [],
-      allValues: []
+      allValues: [],
     }
       
 
@@ -56,8 +58,10 @@ class Home extends React.Component {
     });
   }
 
-  goEventView(){
-    Actions.eventView();
+  goEventView(event){
+    Actions.eventView({
+      event: event
+    });
   }
 
   goNewEvent(){
@@ -65,7 +69,26 @@ class Home extends React.Component {
   }
 
   render() {
+
+    var eventNodes = this.state.allKeys.map((event, index)=>{
+    return(
+      <View style={styles.listItem}>
+        <Text style={styles.listText}>{event}</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this.goEventView}
+          >
+            <Text style={styles.buttonText}>
+              >
+            </Text>
+          </TouchableOpacity>
+      </View>
+    )
+  })
+
+
     console.log("RESULT", this.state.allKeys);
+    console.log("RESULT", this.state.allValues);
     return (
       <View style={styles.container}>
         <View style={styles.top}>
@@ -78,27 +101,12 @@ class Home extends React.Component {
             </Text>
           </TouchableOpacity>
         </View>
-        <ListView
-          styles={styles.listView}
-          dataSource={this.state.dataSource}
-          renderRow={(rowData) => 
-            <View style={styles.listItem}>
-              <Text style={styles.listText}>
-                {rowData}
-              </Text>
 
-              <TouchableOpacity
-                style={styles.button}
-                onPress={this.goEventView}
-              >
-                <Text style={styles.buttonText}>
-                  >
-                </Text>
-              </TouchableOpacity>
 
-            </View>
-          }
-        />
+        <ScrollView>
+          {eventNodes}
+        </ScrollView>
+
 
       </View>
     );
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF",
+    backgroundColor: "#3684B8",
   },
   top: {
     flex: 0,
@@ -128,13 +136,14 @@ const styles = StyleSheet.create({
     margin: 2,
     padding: 2,
     borderWidth: 0.5,
-    borderColor: "#3684B8",
+    borderColor: "white",
     borderRadius: 5,
     alignSelf: "stretch",
     width: 350,
+    height: 40,
   },
   listText:{
-    color: "#3684B8",
+    color: "white",
     marginLeft: 5,
   },
   listView: {
@@ -146,7 +155,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   button: {
-    margin: 2,
+    margin: 10,
     width: 30,
     height: 30,
     justifyContent: "center",
@@ -155,10 +164,30 @@ const styles = StyleSheet.create({
     backgroundColor: "#3684B8"
   },
   buttonText: {
-    fontSize: 15,
+    fontSize: 20,
     color: "white"
   },
 });
 
 export default Home;
 
+              // <TouchableOpacity
+              //   style={styles.button}
+              // >
+              //   <Text style={styles.buttonText}>
+              //     >
+              //   </Text>
+              // </TouchableOpacity>
+
+                      // <ListView
+        //   styles={styles.listView}
+        //   dataSource={this.state.dataSource}
+        //   renderRow={(rowData) => 
+        //     <TouchableHighlight style={styles.listItem} onPress={this.goEventView}
+        //     >
+        //       <Text style={styles.listText}>
+        //         {rowData}
+        //       </Text>
+        //     </TouchableHighlight>
+        //   }
+        // />

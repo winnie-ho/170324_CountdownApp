@@ -11,6 +11,7 @@ import Clock from "../components/Clock.js"
 class EventView extends React.Component {
   constructor(props){
     super(props)
+    console.log(this.props);
 
     this.state = {
     }
@@ -30,8 +31,7 @@ class EventView extends React.Component {
         <Image source={pic} style={styles.image}>
           <Clock/>
           <Text style={styles.event}>
-              HONG{"\n"}
-              KONG
+              {this.props.event}
           </Text>
         </Image>
       </View>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: "white",
     backgroundColor: 'rgba(0,0,0,0.3)',
-    margin: 12,
+    margin: 5,
     marginTop: 70,
     borderRadius: 5,
     padding: 60,

@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
     color: "#3684B8",
   },
   DP: {
-    color: "#3684B8",
     width: 300,
   },
   input: {
