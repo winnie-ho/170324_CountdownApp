@@ -10,36 +10,44 @@ import {
 class Clock extends React.Component {
   constructor(props){
     super(props)
+
     this.setTime = this.setTime.bind(this);
+    this.date = this.props.date;
 
     this.state = {
-      holiday: null,
       days: true,
       hours: true, 
       minutes: true,
-      seconds: true
+      seconds: true,
     }
       
-    setInterval(()=>{
-      this.setTime();
-    },1000);
+    // setInterval(()=>{
+    //   this.setTime();
+    // },1000);
   }
 
-  componentDidMount(){
+
+
+  componentWillReceiveProps(){
+    console.log("mounting");
     this.setTime();
   }
-
 
   setTime(){
     var time = new Date();
     var timeNowmm = Date.parse(time);
 
-    var event1 = new Date("April 24, 2017 08:00:00");
-    var event1mm = Date.parse(event1);
 
-    this.setState({holiday: event1});
 
-    var timeLeftSeconds = (event1mm-timeNowmm)/1000;
+    console.log("date", this.props.date);
+    var dateString = this.props.date;
+    var event = new Date(dateString);
+    var eventmm = Date.parse(event);
+    console.log("EVENT", event);
+    console.log("EVENTmm",eventmm);
+
+
+    var timeLeftSeconds = (eventmm-timeNowmm)/1000;
     var timeLeftMinutes = timeLeftSeconds/60;
     var timeLeftHours = timeLeftMinutes/60;
     var timeLeftDays = timeLeftHours/24;
@@ -53,9 +61,8 @@ class Clock extends React.Component {
 
 
   render() {
-
-
-    return (      
+    console.log("THIS", this.props.date);     
+    return (
       <View style={styles.clock}>
 
         <View style={styles.square}>

@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  AsyncStorage,
 } from 'react-native';
 
 import {
@@ -27,6 +28,8 @@ class Event extends React.Component {
   componentDidMount(){
   }
 
+
+
   goEventView(){
     Actions.eventView({
       event: this.props.event
@@ -41,7 +44,7 @@ class Event extends React.Component {
         <Text 
         style={styles.text}
         onPress={this.goEventView}
- >
+        >
           {this.props.event}
         </Text>
         

@@ -29,7 +29,7 @@ class newEvent extends React.Component {
   }
 
   onDateChange(date){
-    this.setState({date: date});
+    this.setState({eventTime: date});
   }
 
   addEvent(){
@@ -73,6 +73,7 @@ class newEvent extends React.Component {
           mode="datetime"
           onDateChange={this.onDateChange}
         />
+
       </View>
 
 

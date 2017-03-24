@@ -61,7 +61,6 @@ class Home extends React.Component {
   }
 
 
-
   goNewEvent(){
     Actions.newEvent();
   }
@@ -70,7 +69,7 @@ class Home extends React.Component {
 
     var eventNodes = this.state.allKeys.map((event, index)=>{
     return(
-      <View style={styles.listItem}>
+      <View style={styles.listItem} key={index}>
         <Event 
         event={event}
         >
