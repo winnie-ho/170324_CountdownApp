@@ -16,13 +16,15 @@ import {
   Actions,
 } from "react-native-router-flux"
 
+import Event from "../components/Event.js"
+
+
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class Home extends React.Component {
   constructor(props){
     super(props)
 
-    this.goEventView = this.goEventView.bind(this);
     this.goNewEvent = this.goNewEvent.bind(this);
 
     this.state = {
@@ -58,11 +60,7 @@ class Home extends React.Component {
     });
   }
 
-  goEventView(event){
-    Actions.eventView({
-      event: event
-    });
-  }
+
 
   goNewEvent(){
     Actions.newEvent();
@@ -73,15 +71,11 @@ class Home extends React.Component {
     var eventNodes = this.state.allKeys.map((event, index)=>{
     return(
       <View style={styles.listItem}>
-        <Text style={styles.listText}>{event}</Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={this.goEventView}
-          >
-            <Text style={styles.buttonText}>
-              >
-            </Text>
-          </TouchableOpacity>
+        <Event 
+        event={event}
+        >
+          {event}
+        </Event>
       </View>
     )
   })
@@ -144,7 +138,7 @@ const styles = StyleSheet.create({
   },
   listText:{
     color: "white",
-    marginLeft: 5,
+    marginLeft: 10,
   },
   listView: {
     flex:0.9,
