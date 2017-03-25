@@ -34,7 +34,7 @@ class EventView extends React.Component {
 
   getTime(){
     AsyncStorage.getItem(this.props.event).then((value) => {
-        this.setState({date: value});
+        this.setState({date: JSON.parse(value)});
     }).done();
   }
 
@@ -51,22 +51,23 @@ class EventView extends React.Component {
     return (
       <View style={styles.container}>
         <Image source={pic} style={styles.image}>
-           <TouchableOpacity
-            style={styles.button}
-            onPress={this.deleteEvent}
-          >
-            <Text style={styles.buttonText}>
-              -
-            </Text>
-          </TouchableOpacity>
           <Clock
             date={this.state.date}
+            event={this.props.event}
           />
           <Text style={styles.event}>
             {this.props.event}
             {"\n"}
             {this.state.date}
           </Text>
+           <TouchableOpacity
+            style={styles.button}
+            onPress={this.deleteEvent}
+          >
+            <Text style={styles.buttonText}>
+              DELETE
+            </Text>
+          </TouchableOpacity>
         </Image>
       </View>
     );
@@ -105,8 +106,8 @@ const styles = StyleSheet.create({
     width: 300,
   },
   button: {
-    margin: 10,
-    width: 30,
+    marginTop: 100,
+    width: 70,
     height: 30,
     justifyContent: "center",
     alignItems: "center",
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.3)',
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 14,
     color: "white"
   },
 });

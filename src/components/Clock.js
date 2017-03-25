@@ -4,13 +4,15 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  AsyncStorage
 } from 'react-native';
 
 class Clock extends React.Component {
   constructor(props){
     super(props)
 
+    this.getTime = this.getTime.bind(this);
     this.setTime = this.setTime.bind(this);
     this.date = this.props.date;
 
@@ -19,6 +21,7 @@ class Clock extends React.Component {
       hours: true, 
       minutes: true,
       seconds: true,
+      date: null,
     }
       
     // setInterval(()=>{
@@ -28,23 +31,30 @@ class Clock extends React.Component {
 
 
 
-  componentWillReceiveProps(){
-    console.log("mounting");
-    this.setTime();
+  // componentWillMount(){
+  //   this.getTime();
+  // }
+
+  componentDidMount(){
+    this.getTime()
+    
+  }
+
+  getTime(){
+    AsyncStorage.getItem(this.props.event).then((value) => {
+      this.setState({date: JSON.parse(value)});
+      this.setTime(); 
+      console.log("time", value);
+    }).done();
   }
 
   setTime(){
     var time = new Date();
     var timeNowmm = Date.parse(time);
 
-
-
-    console.log("date", this.props.date);
-    var dateString = this.props.date;
-    var event = new Date(dateString);
+    var event = new Date(this.state.date);
     var eventmm = Date.parse(event);
-    console.log("EVENT", event);
-    console.log("EVENTmm",eventmm);
+
 
 
     var timeLeftSeconds = (eventmm-timeNowmm)/1000;
@@ -60,8 +70,9 @@ class Clock extends React.Component {
   }
 
 
+
+
   render() {
-    console.log("THIS", this.props.date);     
     return (
       <View style={styles.clock}>
 
