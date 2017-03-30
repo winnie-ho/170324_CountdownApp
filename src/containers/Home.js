@@ -28,7 +28,7 @@ class Home extends React.Component {
     this.goNewEvent = this.goNewEvent.bind(this);
 
     this.state = {
-      event: "",
+      event: null,
       dataSource: ds.cloneWithRows([]),
       allKeys: [],
       allValues: [],
@@ -52,10 +52,13 @@ class Home extends React.Component {
          console.log("event keys", key);
 
          let value = store[i][1];
+         
          this.state.allValues.push(value);
          console.log("date values", value);
         });
+
         this.setState({dataSource: ds.cloneWithRows(this.state.allKeys)});
+        console.log("ALL KEYS", this.state.allKeys);
       });
     });
   }
@@ -66,6 +69,11 @@ class Home extends React.Component {
   }
 
   render() {
+
+    //sorting the events by name
+    // this.state.allKeys.sort(function(a,b){
+    // return (a - b)
+    // });
 
     var eventNodes = this.state.allKeys.map((event, index)=>{
     return(

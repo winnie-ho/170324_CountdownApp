@@ -17,10 +17,10 @@ class Clock extends React.Component {
     this.date = this.props.date;
 
     this.state = {
-      days: true,
-      hours: true, 
-      minutes: true,
-      seconds: true,
+      days: null,
+      hours: null, 
+      minutes: null,
+      seconds: null,
       date: null,
     }
       
@@ -30,20 +30,17 @@ class Clock extends React.Component {
   }
 
 
-
-  // componentWillMount(){
-  //   this.getTime();
-  // }
-
   componentDidMount(){
-    this.getTime()
-    
+    setInterval(()=>{
+      this.getTime();
+      this.setTime(); 
+    },1000);
   }
+
 
   getTime(){
     AsyncStorage.getItem(this.props.event).then((value) => {
       this.setState({date: JSON.parse(value)});
-      this.setTime(); 
       console.log("time", value);
     }).done();
   }
@@ -73,26 +70,39 @@ class Clock extends React.Component {
 
 
   render() {
+
+    if(this.state.days<0){
+      var daysDisplay = "-"
+      var hoursDisplay = "-"
+      var minutesDisplay = "-"
+      var secondsDisplay = "-"
+    } else {
+      daysDisplay = this.state.days
+      hoursDisplay = this.state.hours
+      minutesDisplay = this.state.minutes
+      secondsDisplay = this.state.seconds
+    }
+
     return (
       <View style={styles.clock}>
 
         <View style={styles.square}>
-        <Text style={styles.timer}>{this.state.days}</Text>
+        <Text style={styles.timer}>{daysDisplay}</Text>
         <Text style={styles.text}>Days</Text>
         </View>
 
         <View style={styles.square}>
-        <Text style={styles.timer}>{this.state.hours}</Text>
+        <Text style={styles.timer}>{hoursDisplay}</Text>
         <Text style={styles.text}>Hours</Text>
         </View>
 
         <View style={styles.square}>
-        <Text style={styles.timer}>{this.state.minutes}</Text>
+        <Text style={styles.timer}>{minutesDisplay}</Text>
         <Text style={styles.text}>Minutes</Text>
         </View>
 
         <View style={styles.square}>
-        <Text style={styles.timer}>{this.state.seconds}</Text>
+        <Text style={styles.timer}>{secondsDisplay}</Text>
         <Text style={styles.text}>Seconds</Text>
         </View>
       </View>

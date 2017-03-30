@@ -26,9 +26,14 @@ class Event extends React.Component {
   }
 
   componentDidMount(){
+    this.getTime();
   }
 
-
+  getTime(){
+    AsyncStorage.getItem(this.props.event).then((value) => {
+        this.setState({date: JSON.parse(value)});
+    }).done();
+  }
 
   goEventView(){
     Actions.eventView({

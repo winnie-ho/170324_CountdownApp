@@ -23,7 +23,7 @@ class EventView extends React.Component {
     this.deleteEvent = this.deleteEvent.bind(this);
 
     this.state = {
-      date: null,
+      date: "",
     }
       
 
@@ -58,7 +58,7 @@ class EventView extends React.Component {
           <Text style={styles.event}>
             {this.props.event}
             {"\n"}
-            {this.state.date}
+            {this.state.date.slice(8,10)}/{this.state.date.slice(5,7)}/{this.state.date.slice(0,4)}{"\n"} {this.state.date.slice(11,16)}
           </Text>
            <TouchableOpacity
             style={styles.button}
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   event: {
-    fontSize: 20,
+    fontSize: 25,
     textAlign: 'center',
     color: "white",
     backgroundColor: 'rgba(0,0,0,0.3)',
